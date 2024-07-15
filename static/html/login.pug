@@ -1,0 +1,65 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', type='text/css', href='client/css/style.css')
+    title Welcome to Node.js
+    style(type='text/css').
+      .jumbotron {
+      text-align: center;
+      }
+  body
+    .jumbotron(style='background: DarkSeaGreen !important')
+      h1 Login Page
+      p Please enter your user name and password. Both are case sensitive.
+    .row
+      .col-md-1
+      .col-md-10
+        #error_message
+        form#loginForm(method='POST')
+          label(for='username') User:
+          br
+          input#username.btn-block(type='text', name='username', placeholder='Username', required='')
+          br
+          br
+          label(for='password') Password:
+          br
+          input#password.btn-block(type='password', name='password', placeholder='Password', required='')
+          br
+          br
+          input.btn.btn-primary.btn-block(type='submit', value='Login')
+        br
+        button.btn.btn-secondary.btn-block(onclick="window.location.href='/createAccount'") Create Account
+      .col-md-1
+    script.
+      document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      loginUser();
+      });
+      function loginUser() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      fetch("/login", {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+      if (data.success) {
+      window.location.href = "/schedule";
+      } else {
+      document.getElementById("error_message").innerHTML = '<p>Invalid credentials. Please try again!</p>';
+      $("#error_message").addClass("alert alert-danger");
+      //document.getElementById("error_message").classList.add("alert alert-danger");
+      // alert("Login failed. Please check your credentials.");
+      }
+      })
+      .catch(error => console.error("Error:", error));
+      }

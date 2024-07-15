@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expanded navbar-light bg-light">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/welcome">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/schedule">Schedule</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link active" href="/addEvent">Add Event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <br>
+    <br>
+    <div class="container mb-5">
+        <form name="editEvent" method="post" action="/editEvent/{{eventId}}" id="editEvent">
+            <div class="form-group">
+                <label for="nameInput">Event</label>
+                <input type="text" id="nameInput" class="form-control" name="event_event" pattern="[a-zA-Z0-9\s]+"
+                    title="Event must be alphanumeric" required="" value="{{event.event_event}}">
+                <small id="eventHelp" class="form-text text-muted">
+                    Event name must be alphanumeric</small>
+            </div>
+            <div class="form-group">
+                <label for="dayInput">Day of Week</label>
+                <select id="dayInput" class="form-control" name="event_day">
+                    <option value="Sunday" {{event.event_day==="Sunday" ? "selected" : ""}}>Sunday</option>
+                    <option value="Monday" {{event.event_day==="Monday" ? "selected" : ""}}>Monday</option>
+                    <option value="Tuesday" {{event.event_day==="Tuesday" ? "selected" : ""}}>Tuesday</option>
+                    <option value="Wednesday" {{event.event_day==="Wednesday" ? "selected" : ""}}>Wednesday</option>
+                    <option value="Thursday" {{event.event_day==="Thursday" ? "selected" : ""}}>Thursday</option>
+                    <option value="Friday" {{event.event_day==="Friday" ? "selected" : ""}}>Friday</option>
+                    <option value="Saturday" {{event.event_day==="Saturday" ? "selected" : ""}}>Saturday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="startTimeInput">Start</label>
+                <input id="startTimeInput" type="time" class="form-control" name="event_start" required=""
+                    value="{{event.event_start}}">
+            </div>
+            <div class="form-group">
+                <label for="endTimeInput">End</label>
+                <input id="endTimeInput" type="time" class="form-control" name="event_end" required=""
+                    value="{{event.event_end}}">
+            </div>
+            <div class="form-group">
+                <label for="phoneInput">Phone</label>
+                <input id="phoneInput" type="text" class="form-control" name="event_phone" required=""
+                    value="{{event.event_phone}}">
+            </div>
+            <div class="form-group">
+                <label for="locationInput">Location</label>
+                <input id="locationInput" type="text" class="form-control" name="event_location" required=""
+                    value="${event.event_location}">
+            </div>
+            <div class="form-group">
+                <label for="extraInput">Extra Info</label>
+                <input id="extraInput" type="text" class="form-control" name="event_info" required=""
+                    value="{{event.event_info}}">
+            </div>
+            <div class="form-group">
+                <label for="urlInput">Enter URL for the Extra Info</label>
+                <input id="urlInput" type="url" class="form-control" name="event_url" required=""
+                    value="{{event.event_url}}">
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

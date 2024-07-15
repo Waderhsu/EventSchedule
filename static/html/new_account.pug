@@ -1,0 +1,46 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', type='text/css', href='client/css/style.css')
+    title Create Account
+    script.
+      function validateForm() {
+        var password = document.getElementById("passwordInput").value;
+        var confirmPassword = document.getElementById("confirmPasswordInput").value;
+        if (password != confirmPassword) {
+          document.getElementById("passwordMatchHelp").innerText = "Passwords do not match";
+          return false;
+        }
+        return true;
+      }
+  body
+    nav.navbar.navbar-expanded.navbar-light.bg-light
+      ul.nav.nav-pills
+        li.nav-item
+          a.nav-link(href="/welcome") Home
+        li.nav-item
+          a.nav-link(href="/login") Login
+    br
+    br
+    div.container.mb-5
+      form(name="createAccountForm", method="post", action="/createAccount", onsubmit="return validateForm()")
+        div.form-group
+          label(for="emailInput") Email
+          input#emailInput.form-control(type="email", name="email", required)
+        div.form-group
+          label(for="passwordInput") Password
+          input#passwordInput.form-control(type="password", name="password", required)
+        div.form-group
+          label(for="confirmPasswordInput") Confirm Password
+          input#confirmPasswordInput.form-control(type="password", name="confirm_password", required)
+          small#passwordMatchHelp.form-text.text-muted
+        button.btn.btn-primary(type="submit") Create Account
+        div#errorMessage(style="color: red;")
+          if errorMessage
+           = errorMessage
+        	

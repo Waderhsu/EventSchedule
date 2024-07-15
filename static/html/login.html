@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="client/css/style.css">
+  <title>Welcome to Node.js</title>
+  <style type="text/css">
+    .jumbotron {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="jumbotron" style="background: DarkSeaGreen !important">
+    <h1>Login Page</h1>
+    <p>Please enter your user name and password. Both are case sensitive.</p>
+  </div>
+
+  <div class="row">
+    
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div id="error_message"></div>
+      <form id="loginForm" method="POST">
+        <label for="username">User:</label><br>
+        <input type="text" id="username" name="username" placeholder="Username" class="btn-block" required><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="Password" class="btn-block" required><br><br>
+        <input type="submit" class="btn btn-primary btn-block" value="Login">
+      </form>
+      <br>
+      <button onclick="window.location.href='/createAccount'" class="btn btn-secondary btn-block">Create Account</button>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      loginUser();
+    });
+
+    function loginUser() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            window.location.href = "/schedule";
+          } else {
+            document.getElementById("error_message").innerHTML = '<p>Invalid credentials. Please try again!</p>';
+            $("#error_message").addClass("alert alert-danger");
+            //document.getElementById("error_message").classList.add("alert alert-danger");
+            // alert("Login failed. Please check your credentials.");
+          }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+  </script>
+</body>
+
+</html>
